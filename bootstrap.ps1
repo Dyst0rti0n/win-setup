@@ -5,6 +5,7 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     exit 1
 }
 
+Write-Host "Installing Git if not already installed..." -ForegroundColor Green
 # Install Git if not already installed
 if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
     Write-Host "Git is not installed. Installing Git..." -ForegroundColor Green
@@ -28,6 +29,10 @@ if (Test-Path $cloneDir) {
 }
 
 # Run the setup script
-$setupScript = "$cloneDir\win-setup.sh"
+$setupScript = "$cloneDir\setup-windows-wsl.sh"
 Write-Host "Running the setup script..." -ForegroundColor Green
-bash $setupScript
+& $setupScript
+
+Write-Host "Setup script completed." -ForegroundColor Green
+Write-Host "Press any key to exit..."
+[System.Console]::ReadKey() | Out-Null
