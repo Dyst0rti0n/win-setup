@@ -29,7 +29,7 @@ if (Test-Path $cloneDir) {
 }
 
 # Run the setup script
-$setupScript = "$cloneDir\setup-windows-wsl.sh"
+$setupScript = "$cloneDir\win-setup.sh"
 Write-Host "Running the setup script..." -ForegroundColor Green
 & $setupScript
 
