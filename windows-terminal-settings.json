@@ -1,7 +1,0 @@
-{
-    "guid": "{your-wsl-guid}",
-    "name": "Kali Linux",
-    "source": "Windows.Terminal.Wsl",
-    "backgroundImage": "file:///mnt/c/Users/your-username/background.jpg",
-    "backgroundImageOpacity": 0.5
-  }
