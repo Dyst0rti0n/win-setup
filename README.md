@@ -24,7 +24,7 @@ This is a oneliner that installs git, then proceeds to run bootstrap.ps1 which r
 **Must be Administrator** - `Ctrl + r` then type `cmd` and `Ctrl + shift + enter`
 
    ```cmd
-   @echo off & powershell -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; if (-not (Get-Command git -ErrorAction SilentlyContinue)) { iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')); choco install git -y }; git clone https://github.com/your-username/ultimate-windows-setup.git $env:USERPROFILE\ultimate-windows-setup; & $env:USERPROFILE\ultimate-windows-setup\bootstrap.ps1"
+   @echo off & powershell -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; if (-not (Get-Command git -ErrorAction SilentlyContinue)) { iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')); choco install git -y }; git clone https://github.com/Dyst0rti0n/win-setup.git $env:USERPROFILE\winsetup; & $env:USERPROFILE\win-setup\bootstrap.ps1"
    ```
 
 3. **Run the Bootstrap Script**:
