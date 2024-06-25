@@ -19,19 +19,20 @@ Windows Setup script! This script automates the installation and configuration o
 
 ### Steps
 
-1. **Download the Bootstrap Script**:
-   Save the `bootstrap.ps1` script to your local machine.
+1. **Install Git and run script**:
+This is a oneliner that installs git, then proceeds to run bootstrap.ps1 which runs win-setup.sh from it. 
+**Must be Administrator** - `Ctrl + r` then type `cmd` and `Ctrl + shift + enter`
 
-2. **Run the Bootstrap Script**:
+   ```cmd
+   @echo off & powershell -Command "Set-ExecutionPolicy Bypass -Scope Process -Force; if (-not (Get-Command git -ErrorAction SilentlyContinue)) { iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')); choco install git -y }; git clone https://github.com/your-username/ultimate-windows-setup.git $env:USERPROFILE\ultimate-windows-setup; & $env:USERPROFILE\ultimate-windows-setup\bootstrap.ps1"
+   ```
+
+3. **Run the Bootstrap Script**:
    Open a PowerShell terminal with administrative privileges and run the bootstrap script:
    ```powershell
    Set-ExecutionPolicy Bypass -Scope Process -Force
    .\bootstrap.ps1
    ```
-
-3. **Follow the Prompts**:
-The script will guide you through the installation process, prompting you for necessary inputs.
-
 4. **Complete the Kali Linux Setup**:
 After the script completes, open Kali Linux from your Windows Terminal and re-run the same script to complete the Kali Linux environment setup:
 

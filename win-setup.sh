@@ -220,7 +220,7 @@ setup_kali_environment() {
   # Function to clone and apply custom dotfiles
   apply_dotfiles() {
     echo -e "${GREEN}Cloning and applying custom dotfiles...${NC}"
-    git clone https://github.com/your-username/dotfiles.git ~/dotfiles
+    git clone https://github.com/Dyst0rti0n/dotfiles.git ~/dotfiles
     cd ~/dotfiles
     ./install.sh
   }
