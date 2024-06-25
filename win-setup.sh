@@ -84,7 +84,7 @@ install_chocolatey_and_software() {
   powershell -NoProfile -ExecutionPolicy Bypass -Command "Set-ExecutionPolicy Bypass -Scope Process; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))"
 
   echo -e "${GREEN}Installing common software...${NC}"
-  choco install -y googlechrome firefox brave vscode git nodejs python 7zip notepadplusplus docker-desktop slack postman cmake ruby go mongodb openjdk17 maven obsidian
+  choco install -y googlechrome firefox brave vscode git nodejs python 7zip winzip notepadplusplus docker-desktop slack postman cmake ruby go mongodb mysql sqlite awscli terraform ansible obsidian sysinternals treesize winscp putty wireshark nmap burpsuite netcat
 
   echo -e "${GREEN}Setting up environment variables...${NC}"
   env_vars=(
@@ -108,14 +108,16 @@ install_chocolatey_and_software() {
 
 configure_git_and_ssh() {
   echo -e "${YELLOW}Configuring Git...${NC}"
-  git config --global user.name "Your Name"
-  git config --global user.email "you@example.com"
+  git_user=$(prompt_text "Enter your GitHub username")
+  git_email=$(prompt_text "Enter your GitHub email")
+  git config --global user.name "$git_user"
+  git config --global user.email "$git_email"
   git config --global core.editor "code --wait"
   git config --global merge.tool "code --wait"
   git config --global diff.tool "code --wait"
 
   echo -e "${YELLOW}Setting up SSH keys for GitHub...${NC}"
-  ssh-keygen -t rsa -b 4096 -C "you@example.com" -f ~/.ssh/id_rsa -N ""
+  ssh-keygen -t rsa -b 4096 -C "$git_email" -f ~/.ssh/id_rsa -N ""
   powershell -Command "Start-Process powershell -ArgumentList 'Get-Content ~/.ssh/id_rsa.pub | clip' -Verb RunAs"
   echo -e "${GREEN}SSH key has been copied to the clipboard. Add it to your GitHub account.${NC}"
 }
