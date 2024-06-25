@@ -45,7 +45,8 @@ prompt_wsl_reset() {
   if prompt_user "Do you want to reset WSL for a fresh installation? All existing WSL data will be deleted."; then
     echo -e "${RED}Warning: This will delete all your WSL data!${NC}"
     if prompt_user "Are you sure you want to proceed?"; then
-      wsl --unregister $(wsl --list --quiet)
+      wsl --unregister $(wsl --list --quiet) 2>/dev/null || true
+      wsl --list --quiet | xargs -n1 wsl --unregister || true
     else
       echo -e "${YELLOW}Aborted WSL reset.${NC}"
       exit 1
@@ -70,6 +71,7 @@ install_wsl2_kali() {
 
   echo -e "${GREEN}Applying user configurations...${NC}"
   wsl -d kali-linux -u root -- bash -c "
+    apt update && apt install -y sudo;
     useradd -m -s /bin/bash $username;
     echo '$username:$password' | chpasswd;
     usermod -aG sudo $username;
@@ -115,6 +117,7 @@ configure_git_and_ssh() {
   git config --global core.editor "code --wait"
   git config --global merge.tool "code --wait"
   git config --global diff.tool "code --wait"
+  git config --global --add safe.directory "$env:USERPROFILE\Documents\windows-setup-files\win-setup"
 
   echo -e "${YELLOW}Setting up SSH keys for GitHub...${NC}"
   ssh-keygen -t rsa -b 4096 -C "$git_email" -f ~/.ssh/id_rsa -N ""
