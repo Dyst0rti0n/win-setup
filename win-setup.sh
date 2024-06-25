@@ -87,17 +87,23 @@ install_chocolatey_and_software() {
   choco install -y googlechrome firefox brave vscode git nodejs python 7zip notepadplusplus docker-desktop slack postman cmake ruby go mongodb openjdk17 maven obsidian
 
   echo -e "${GREEN}Setting up environment variables...${NC}"
-  powershell -Command "[Environment]::SetEnvironmentVariable('JAVA_HOME', 'C:\Program Files\OpenJDK\openjdk-17', 'Machine')"
-  powershell -Command "[Environment]::SetEnvironmentVariable('Path', $env:Path + ';C:\Program Files\OpenJDK\openjdk-17\bin', 'Machine')"
-  powershell -Command "[Environment]::SetEnvironmentVariable('Path', $env:Path + ';C:\Program Files\Git\cmd', 'Machine')"
-  powershell -Command "[Environment]::SetEnvironmentVariable('Path', $env:Path + ';C:\Program Files\nodejs', 'Machine')"
-  powershell -Command "[Environment]::SetEnvironmentVariable('Path', $env:Path + ';C:\Program Files\Python39\Scripts', 'Machine')"
-  powershell -Command "[Environment]::SetEnvironmentVariable('Path', $env:Path + ';C:\Program Files\Python39', 'Machine')"
-  powershell -Command "[Environment]::SetEnvironmentVariable('Path', $env:Path + ';C:\Program Files (x86)\CMake\bin', 'Machine')"
-  powershell -Command "[Environment]::SetEnvironmentVariable('Path', $env:Path + ';C:\Program Files\Docker\Docker\resources\bin', 'Machine')"
-  powershell -Command "[Environment]::SetEnvironmentVariable('Path', $env:Path + ';C:\Program Files\Postman', 'Machine')"
-  powershell -Command "[Environment]::SetEnvironmentVariable('Path', $env:Path + ';C:\Program Files\Go\bin', 'Machine')"
-  powershell -Command "[Environment]::SetEnvironmentVariable('Path', $env:Path + ';C:\Ruby30-x64\bin', 'Machine')"
+  env_vars=(
+    "JAVA_HOME='C:\Program Files\OpenJDK\openjdk-17'"
+    "Path=\$env:Path + ';C:\Program Files\OpenJDK\openjdk-17\bin'"
+    "Path=\$env:Path + ';C:\Program Files\Git\cmd'"
+    "Path=\$env:Path + ';C:\Program Files\nodejs'"
+    "Path=\$env:Path + ';C:\Program Files\Python39\Scripts'"
+    "Path=\$env:Path + ';C:\Program Files\Python39'"
+    "Path=\$env:Path + ';C:\Program Files (x86)\CMake\bin'"
+    "Path=\$env:Path + ';C:\Program Files\Docker\Docker\resources\bin'"
+    "Path=\$env:Path + ';C:\Program Files\Postman'"
+    "Path=\$env:Path + ';C:\Program Files\Go\bin'"
+    "Path=\$env:Path + ';C:\Ruby30-x64\bin'"
+  )
+
+  for env_var in "${env_vars[@]}"; do
+    powershell -Command "[Environment]::SetEnvironmentVariable($env_var, 'Machine')" || echo -e "${RED}Failed to set environment variable: $env_var${NC}"
+  done
 }
 
 configure_git_and_ssh() {
